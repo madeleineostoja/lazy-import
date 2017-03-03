@@ -1,0 +1,109 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="lazy-import">
+  <script>
+    class LazyImport {
+      beforeRegister() {
+        this.is = 'lazy-import';
+
+        this.properties = {
+
+          /**
+           * HTML document to import
+           * @type {String}
+           */
+          href: String,
+
+          /**
+           * Whether import is active or not
+           * @type {Boolean}
+           */
+          active: Boolean,
+
+          /**
+           * Optional attribute to apply to children when active
+           * @type {String}
+           */
+          activeAttr: {
+            type: String,
+            observer: '_cleanUpAttrs(activeAttr, previous)'
+          },
+
+          /**
+           * Optional callback to execute when import loaded
+           * @type {String}
+           */
+          onLoad: String
+
+        };
+
+        this.observers = [
+          '_importDocument(href, active)',
+          '_updateChildAttributes(activeAttr, active)',
+          '_toggleVisibility(active)'
+        ];
+      }
+
+      /**
+       * Import component when active is true
+       * Only ever imported once (handled by Polymer importHref)
+       * @param  {String} href    Value of the href property
+       * @param  {Boolean} active Value of the active property
+       * @return {undefined}
+       */
+      _importDocument(href, active) {
+        let cb = this.onLoad ? this.parentNode[onLoad]() : null;
+
+        if (href && active) {
+          this.importHref(href, cb, null, true);
+        }
+      }
+
+      /**
+       * Set attributes on children to active prop
+       * @param  {String} activeAttr Value of the activeAttr property
+       * @param  {Boolean} active     Value of the active property
+       * @return {undefined}
+       */
+      _updateChildAttributes(activeAttr, active) {
+        let children = Polymer.dom(this).children;
+
+        if (!activeAttr) {
+          return;
+        }
+
+        children.forEach(child => {
+          if (active) {
+            child.setAttribute(activeAttr, true);
+          } else {
+            child.removeAttribute(activeAttr);
+          }
+        });
+      }
+
+      /**
+       * Hide self when active is false
+       * @param  {Boolean} active Value of the active property
+       * @return {undefined}
+       */
+      _toggleVisibility(active) {
+        this.style.display = active ? '' : 'none';
+      }
+
+      /**
+       * Clean up any stray child atributes if activeAttr removed
+       * @param  {String} activeAttr Current value of the activeAttr prop
+       * @param  {String} previous   Previous value of the activeAttr prop
+       * @return {undefined}
+       */
+      _cleanUpAttrs(activeAttr, previous) {
+        if (previous && !activeAttr) {
+          Polymer.dom(this).children.forEach(child => {
+            child.removeAttribute(activeAttr);
+          });
+        }
+      }
+    };
+    Polymer(LazyImport)
+  </script>
+</dom-module>

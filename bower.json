@@ -1,0 +1,28 @@
+{
+  "name": "lazy-import",
+  "version": "0.0.0",
+  "authors": [
+    "Sean King &lt;sean@seanking.org&gt;"
+  ],
+  "description": "Lazily import a component when it is needed",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "lazy-import"
+  ],
+  "main": "lazy-import.html",
+  "license": "MIT",
+  "homepage": "https://github.com/seaneking/lazy-import/",
+  "ignore": [
+    "*",
+    "!*.html",
+    "!LICENSE"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.0"
+  },
+  "devDependencies": {
+    "webcomponentsjs": "^0.7.14",
+    "web-component-tester": "^4.0.0"
+  }
+}
