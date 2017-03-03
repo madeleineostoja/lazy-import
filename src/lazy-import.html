@@ -18,7 +18,12 @@
            * Whether import is active or not
            * @type {Boolean}
            */
-          active: Boolean,
+          active: {
+            type: Boolean,
+            notify: true,
+            reflectToAttribute: true,
+            value: false
+          },
 
           /**
            * Optional attribute to apply to children when active
@@ -26,7 +31,7 @@
            */
           activeAttr: {
             type: String,
-            observer: '_cleanUpAttrs(activeAttr, previous)'
+            observer: '_cleanUpAttrs'
           },
 
           /**
@@ -73,11 +78,15 @@
         }
 
         children.forEach(child => {
+          // Set HTML attribute
           if (active) {
-            child.setAttribute(activeAttr, true);
+            child.setAttribute(activeAttr, '');
           } else {
             child.removeAttribute(activeAttr);
           }
+
+          // And element prop
+          child[activeAttr] = active;
         });
       }
 
