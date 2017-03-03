@@ -1,6 +1,6 @@
 {
   "name": "lazy-import",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Lazily import a component when it is needed",
   "main": "lazy-import.html",
   "scripts": {
