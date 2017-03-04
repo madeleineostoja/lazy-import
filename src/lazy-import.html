@@ -34,11 +34,10 @@
             observer: '_cleanUpAttrs'
           },
 
-          /**
-           * Optional callback to execute when import loaded
-           * @type {String}
-           */
-          onLoad: String
+          loading: {
+            type: Boolean,
+            notify: true
+          }
 
         };
 
@@ -57,10 +56,11 @@
        * @return {undefined}
        */
       _importDocument(href, active) {
-        let cb = this.onLoad ? this.parentNode[onLoad]() : null;
+        let loaded = () => this.loading = false;
 
         if (href && active) {
-          this.importHref(href, cb, null, true);
+          this.loading = true;
+          this.importHref(href, loaded, null, true);
         }
       }
 

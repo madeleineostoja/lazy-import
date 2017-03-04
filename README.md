@@ -1,5 +1,5 @@
 # Lazy Import
-[![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge] [![Published][webcomponents-badge]][webcomponents-url]
+[![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge] ![Size][size-badge] [![Published][webcomponents-badge]][webcomponents-url]
 
 Declaratively import a HTML component when you're ready to use it. Useful for improving the performance of routing in SPAs built on Web Components.
 
@@ -27,27 +27,24 @@ lazy-import relies on emerging standards, for full cross-browser support include
 
 
 ### Basic usage
-Wrap your element in `lazy-import`, and set `active` when you're ready to use it
+Set the path to your element import in the `href` property, then set `active` when you want to import it
 
 ```html
-<lazy-import href="path/to/my-element.html">
-  <my-element></my-element>
-</lazy-import>
+<lazy-import href="path/to/my-element.html"></lazy-import>
+<my-element></my-element>
 
-<!-- Import and show <my-element> -->
+<!-- Import <my-element> -->
 <script>
   document.querySelector('lazy-import').active = true;
 </script>
 ```
 
-Toggling the `active` property also shows/hides the `lazy-import` element, so you element isn't in the document flow until it is imported.
-
-`lazy-import` only imports a component once (the first time `active` is `true`, or if a new `href` is set).
+`lazy-import` only imports a component once (the first time `active` is `true`, or if a new `href` is set), regardless of how many times `active` changes.
 
 ### Lazifying SPA routers
 Use `lazy-import` with simple content switchers like Polymer's [`iron-pages`][iron-pages] to turn them into performant, lazy-loading component routers.
 
-Make your router set the `active` prop on the active route, and wrap view components in `lazy-import`
+Make your router set the `active` prop on the active route, and wrap view components in `lazy-import`. That way both the import and your element will be hidden when inactive, and routing will automatically import the view component lazily
 
 ```html
 <iron-pages
@@ -71,7 +68,7 @@ Property     | Type      | Description
 `href`       | `String`  | Path to import when active                                   
 `active`     | `Boolean` | Whether to import component and show `lazy-import`           
 `activeAttr` | `String`  | Optional attribute to set on children when active            
-`onLoad`     | `String`  | Optional callback to execute when import successfully loaded 
+`loading`    | `Boolean` | True while an import is being fetched & parsed
 
 
 --
@@ -86,6 +83,7 @@ MIT © Sean King <sean@seanking.org>
 [travis-url]: https://travis-ci.org/seaneking/lazy-import
 [bowerdeps-badge]: https://img.shields.io/gemnasium/seaneking/lazy-import.svg
 [bowerdeps-url]: https://gemnasium.com/bower/lazy-import
+[size-badge]: https://badges.herokuapp.com/size/github/seaneking/lazy-import/master/lazy-import.html?gzip=true&color=blue
 [webcomponents-badge]: https://img.shields.io/badge/webcomponents.org-published-blue.svg
-[webcomponents-url]: https://www.webcomponents.org/element/seaneking/lazy-import.svg
+[webcomponents-url]: https://www.webcomponents.org/element/seaneking/lazy-import.sv
 [iron-pages]: https://www.webcomponents.org/element/PolymerElements/iron-pages
