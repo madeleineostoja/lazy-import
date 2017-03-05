@@ -30,16 +30,17 @@ lazy-import relies on emerging standards, for full cross-browser support include
 Set the path to your element import in the `href` property, then set `active` when you want to import it
 
 ```html
-<lazy-import href="path/to/my-element.html"></lazy-import>
-<my-element></my-element>
+<lazy-import href="path/to/my-element.html">
+  <my-element></my-element>
+</lazy-import>
 
-<!-- Import <my-element> -->
+<!-- Import and show <my-element> -->
 <script>
   document.querySelector('lazy-import').active = true;
 </script>
 ```
 
-`lazy-import` only imports a component once (the first time `active` is `true`, or if a new `href` is set), regardless of how many times `active` changes.
+`lazy-import` only imports a component once (the first time `active` is `true`, or if a new `href` is set), regardless of how many times `active` changes. When `active` is false, `lazy-import` is set to `display: none`, so your component is not in the document flow until it is imported.
 
 ### Lazifying SPA routers
 Use `lazy-import` with simple content switchers like Polymer's [`iron-pages`][iron-pages] to turn them into performant, lazy-loading component routers.
